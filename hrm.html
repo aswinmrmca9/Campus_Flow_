@@ -1,23 +1,7 @@
-<?php
-session_start();
-if(!isset($_SESSION['email'])) {
-  echo "<script>window.location.replace('../login/login.html')</script>";
-}
-require("../db.class.php");
-$email=$_SESSION['email'];
-$sql="select * from tbl_user_data where email='$email'";
-$res=select($sql);
-$pro=mysqli_fetch_assoc($res);
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<script type="text/javascript" src="php/swal/jquery.min.js"></script>
-<script type="text/javascript" src="php/swal/bootstrap.min.js"></script>
-<script type="text/javascript" src="php/swal/sweetalert2@11.js"></script>
-</head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -59,37 +43,35 @@ $pro=mysqli_fetch_assoc($res);
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="" class="logo d-flex align-items-center">
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">Campus Flow</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <!-- <form class="search-form d-flex align-items-center" method="POST" action="#">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form> -->
+      </form>
     </div><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <!-- <li class="nav-item d-block d-lg-none">
+        <li class="nav-item d-block d-lg-none">
           <a class="nav-link nav-icon search-bar-toggle " href="#">
             <i class="bi bi-search"></i>
           </a>
-        </li> -->
-        <!-- End Search Icon-->
+        </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown">
 
-          <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
             <span class="badge bg-primary badge-number">4</span>
-          </a> -->
-          <!-- End Notification Icon -->
+          </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
@@ -161,11 +143,10 @@ $pro=mysqli_fetch_assoc($res);
 
         <li class="nav-item dropdown">
 
-          <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
             <span class="badge bg-success badge-number">3</span>
-          </a> -->
-          <!-- End Messages Icon -->
+          </a><!-- End Messages Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
@@ -229,16 +210,16 @@ $pro=mysqli_fetch_assoc($res);
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">Admin</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Admin</h6>
-              <span></span>
+              <!-- <span></span> -->
             </li>
-            <!-- <li>
+            <li>
               <hr class="dropdown-divider">
             </li>
 
@@ -270,10 +251,10 @@ $pro=mysqli_fetch_assoc($res);
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li> -->
+            </li>
 
             <li>
-            <a class="dropdown-item d-flex align-items-center" href="javascript::" onclick="logout()">
+              <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -293,45 +274,21 @@ $pro=mysqli_fetch_assoc($res);
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard.php">
+        <a class="nav-link " href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="department.php">
-          <i class="bi bi-building"></i>
-          <span>Department</span>
+        <a class="nav-link " href="hrm.html">
+          <i class="bi bi-grid"></i>
+          <span>Add Resource</span>
         </a>
       </li>
        <li class="nav-item">
-        <a class="nav-link " href="teacher.php">
-          <i class="bi bi-person-video3"></i>
-          <span>Faculty</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="student.php">
-          <i class="bi bi-person-workspace"></i>
-          <span>Student</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="supplier.php">
-          <i class="bi bi-person-video2"></i>
-          <span>Supplier</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="manager.php">
-          <i class="bi bi-person-video2"></i>
-          <span>Manager</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="college.php">
-          <i class="bi bi-house-door-fill"></i>
-          <span>College</span>
+        <a class="nav-link " href="reqfrm.html">
+          <i class="bi bi-grid"></i>
+          <span>Request From</span>
         </a>
       </li>
       <!-- End Dashboard Nav -->
@@ -559,4 +516,245 @@ $pro=mysqli_fetch_assoc($res);
 
     </ul>
 
-  </aside><!-- End Sidebar--><!-- End Sidebar-->   
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Form Layouts</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Request</li>
+          <li class="breadcrumb-item active">Form</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Request Form</h5>
+
+              <!-- Horizontal Form -->
+              <form>
+                <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">Document No</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputText">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">Effective Date</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Procedure Title</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Submission No</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Custodian</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+                 <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Select Area</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+
+                   <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Department</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+
+                  <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Complaint</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Quantity Details</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Est. Materail cost</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+                  <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Requirement</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">Justification</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword">
+                  </div>
+                </div>
+
+                <!-- <fieldset class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                        First radio
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                      <label class="form-check-label" for="gridRadios2">
+                        Second radio
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
+                      <label class="form-check-label" for="gridRadios3">
+                        Third disabled radio
+                      </label>
+                    </div>
+                  </div>
+                </fieldset> -->
+                <div class="row mb-3">
+                  <div class="col-sm-10 offset-sm-2">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck1">
+                      <label class="form-check-label" for="gridCheck1">
+                        Accept
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form><!-- End Horizontal Form -->
+
+            </div>
+          </div>
+
+          <!-- <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Multi Columns Form</h5> -->
+
+              <!-- Multi Columns Form -->
+              <!-- <form class="row g-3">
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Your Name</label>
+                  <input type="text" class="form-control" id="inputName5">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputEmail5" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="inputEmail5">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputPassword5" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="inputPassword5">
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress5" class="form-label">Address</label>
+                  <input type="text" class="form-control" id="inputAddres5s" placeholder="1234 Main St">
+                </div>
+                <div class="col-12">
+                  <label for="inputAddress2" class="form-label">Address 2</label>
+                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="col-md-6">
+                  <label for="inputCity" class="form-label">City</label>
+                  <input type="text" class="form-control" id="inputCity">
+                </div>
+                <div class="col-md-4">
+                  <label for="inputState" class="form-label">State</label>
+                  <select id="inputState" class="form-select">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label for="inputZip" class="form-label">Zip</label>
+                  <input type="text" class="form-control" id="inputZip">
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                      Check me out
+                    </label>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </form> --><!-- End Multi Columns Form -->
+
+           <!--  </div>
+          </div> -->
+
+        </div>
+
+        
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; <!-- Copyright --> <strong><span>Campus Flow</span></strong><!-- . All Rights Reserved -->
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      <!-- Designed by --> <a href="https://bootstrapmade.com/"><!-- BootstrapMade --></a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.min.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

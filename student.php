@@ -1,28 +1,10 @@
 <?php
 require('header.php');
-
-
-$sql1="SELECT * FROM tbl_login WHERE user_type in (2,3,4,7,8,9)";
-
-$facultycount=getrows($sql1);
-
-$sql2="SELECT * FROM tbl_login WHERE user_type in (10)";
-
-$studentcount=getrows($sql2);
-
-
-$sql3="SELECT * FROM tbl_department";
-
-$deptcount=getrows($sql3);
-
-
-
 ?>
-
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Student</h1>
       <nav>
         <ol class="breadcrumb">
           <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -39,7 +21,7 @@ $deptcount=getrows($sql3);
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-md-4">
+            <div class="col-xxl-4 col-md-12">
               <div class="card info-card sales-card">
 
                 <!-- <div class="filter">
@@ -56,14 +38,31 @@ $deptcount=getrows($sql3);
                 </div> -->
 
                 <div class="card-body">
-                  <h5 class="card-title">Teacher <span></span></h5>
+                  <h5 class="card-title">Upload Student Details <span></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php echo $facultycount;?></h6>
+
+                      <form class="row g-3 needs-validation" action="php/upload2.php" method="POST" enctype="multipart/form-data" novalidate>
+                                        
+                      <div class="col-md-12">
+                      
+                      
+                      <input class="form-control" type="file" id="formFile" name="excel_file" accept=".xlsx, .xls">
+                      
+                      </div>
+                      
+                      <div class="col-12">
+                      <button class="btn btn-primary" name="submit" type="submit">Submit</button>
+                      </div>
+                      </form>
+
+
+
+                      <!-- <h6>400</h6> -->
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
 
                     </div>
@@ -74,7 +73,7 @@ $deptcount=getrows($sql3);
             </div><!-- End Sales Card -->
 
             <!-- Revenue Card -->
-            <div class="col-md-4">
+            <div class="col-xxl-4 col-md-12">
               <div class="card info-card revenue-card">
 
                 <!-- <div class="filter">
@@ -91,15 +90,251 @@ $deptcount=getrows($sql3);
                 </div> -->
 
                 <div class="card-body">
-                  <h5 class="card-title">Students <span></span></h5>
+                  <h5 class="card-title">Add Student<span></span></h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php echo $studentcount;?></h6>
-                      <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
+                    <p>Add Student by manually</p>
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+                Add Student
+              </button>
+
+              <div class="modal fade" id="largeModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Add Student</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                     
+                    <form action="php/addstud.php" method="post">
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Full Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="fname" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="email" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="phone" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">House Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="hname" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Place</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="place" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">State</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="state" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">District</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" name="district" aria-label="Default select example">
+                      <option selected disabled>Select District</option>
+
+                      <?php
+                          $sql="select * from tbl_district";
+                          $result=select($sql);
+                          if(mysqli_num_rows($result)>0) {
+                            while($arr=mysqli_fetch_assoc($result)) {
+                              ?>
+                                  <option value="<?php echo $arr['district']; ?>">
+                                    <?php echo $arr['district']; ?>
+                                  </option>
+                              <?php 
+                            }	
+                          }
+                        ?>
+
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Pincode</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="pincode" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">User ID</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="userid" class="form-control">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Department_ID</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" name="deptid" aria-label="Default select example">
+                      <option selected disabled>Select Department_ID</option>
+                      
+                        <?php
+                          $sql="select * from tbl_department";
+                          $result=select($sql);
+                          if(mysqli_num_rows($result)>0) {
+                            while($arr=mysqli_fetch_assoc($result)) {
+                              ?>
+                                  <option value="<?php echo $arr['dept_id']; ?>">
+                                    <?php echo $arr['dept_id']; ?>
+                                  </option>
+                              <?php 
+                            }	
+                          }
+                        ?>
+
+                    </select>
+                  </div>
+                </div>
+
+                
+                <!-- <div class="row mb-3">
+                  <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="file" id="formFile">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputTime" class="col-sm-2 col-form-label">Time</label>
+                  <div class="col-sm-10">
+                    <input type="time" class="form-control">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputColor" class="col-sm-2 col-form-label">Color Picker</label>
+                  <div class="col-sm-10">
+                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Textarea</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" style="height: 100px"></textarea>
+                  </div>
+                </div>
+                <fieldset class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                        First radio
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                      <label class="form-check-label" for="gridRadios2">
+                        Second radio
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios" value="option" disabled>
+                      <label class="form-check-label" for="gridRadios3">
+                        Third disabled radio
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">Checkboxes</legend>
+                  <div class="col-sm-10">
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck1">
+                      <label class="form-check-label" for="gridCheck1">
+                        Example checkbox
+                      </label>
+                    </div>
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
+                      <label class="form-check-label" for="gridCheck2">
+                        Example checkbox 2
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Disabled</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" value="Read only / Disabled" disabled>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Select</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Multi Select</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" multiple aria-label="multiple select example">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div> -->
+
+                <div class="row mb-3">
+                  <!-- <label class="col-sm-2 col-form-label">Submit Button</label> -->
+                  <div class="col-sm-10">
+                    <button type="submit" name="sub" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+
+              </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
                     </div>
                   </div>
@@ -109,7 +344,7 @@ $deptcount=getrows($sql3);
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xl-4">
+            <div class="col-xxl-4 col-xl-12">
 
               <div class="card info-card customers-card">
 
@@ -127,18 +362,326 @@ $deptcount=getrows($sql3);
                 </div> -->
 
                 <div class="card-body">
-                  <h5 class="card-title">Department <span></span></h5>
+                  <h5 class="card-title">Student<span></span></h5>
 
-                  <div class="d-flex align-items-center">
+                  <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Department</th>
+                    <!-- <th scope="col">Action</th> -->
+                    <!-- <th scope="col">District</th>
+                    <th scope="col">Pincode</th>
+                    <th scope="col">User_ID</th>
+                    <th scope="col">Department_ID</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                <?php
+                      $sql = "select tbl_user_data.email as u_email,tbl_login.email as u_id,tbl_user_data.*,tbl_department.*,tbl_login.*,tbl_usertype.* from tbl_user_data,tbl_department,tbl_login,tbl_usertype where  tbl_user_data.dept_id=tbl_department.dept_id and tbl_login.email=tbl_user_data.user_id and tbl_usertype.usertype_id=tbl_login.user_type and user_type in (10)";
+                      $result = select($sql);;
+                  if ($result->num_rows > 0) {
+                    $n = 1;
+                    //output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                  ?>
+
+                      <tr>
+                        <td><?php echo $row['full_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['phone_no']; ?></td>
+                        <td><?php echo $row['house_name']; ?></td>
+                        <!-- <td><button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#largeModal1">
+                            Edit
+                              </button>
+
+                              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#basicModal2">
+                               Delete
+                               </button></td> -->
+                        <!-- <td><?php echo $row['district']; ?></td>
+                        <td><?php echo $row['pin_code']; ?></td>
+                        <td><?php echo $row['user_id']; ?></td>
+                        <td><?php echo $row['dept_id']; ?></td> -->
+                      </tr>
+
+
+
+                  <?php
+                      $n++;
+                    }
+                  } else {
+                    echo "<tr><th colspan='9' style='text-align: center;color: black;font-size: 20px;'>No Records</th></tr>";
+                  }
+                  ?>
+                </tbody>
+              </table>
+
+
+              <div class="modal fade" id="largeModal1" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Large Modal</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      
+                    
+                    <form action="" method="post">
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Full Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="fname" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="email" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Phone</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="phone" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">House Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="hname" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Place</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="place" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">State</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="state" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">District</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" name="district" aria-label="Default select example">
+                      <option selected disabled>Select District</option>
+
+                      <?php
+                          $sql="select * from tbl_district";
+                          $result=select($sql);
+                          if(mysqli_num_rows($result)>0) {
+                            while($arr=mysqli_fetch_assoc($result)) {
+                              ?>
+                                  <option value="<?php echo $arr['district']; ?>">
+                                    <?php echo $arr['district']; ?>
+                                  </option>
+                              <?php 
+                            }	
+                          }
+                        ?>
+
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">Pincode</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="pincode" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmail" class="col-sm-2 col-form-label">User ID</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="userid" class="form-control">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Department_ID</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" name="deptid" aria-label="Default select example">
+                      <option selected disabled>Select Department_ID</option>
+                      
+                        <?php
+                          $sql="select * from tbl_department";
+                          $result=select($sql);
+                          if(mysqli_num_rows($result)>0) {
+                            while($arr=mysqli_fetch_assoc($result)) {
+                              ?>
+                                  <option value="<?php echo $arr['dept_id']; ?>">
+                                    <?php echo $arr['dept_id']; ?>
+                                  </option>
+                              <?php 
+                            }	
+                          }
+                        ?>
+
+                    </select>
+                  </div>
+                </div>
+
+                
+                <!-- <div class="row mb-3">
+                  <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
+                  <div class="col-sm-10">
+                    <input class="form-control" type="file" id="formFile">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputTime" class="col-sm-2 col-form-label">Time</label>
+                  <div class="col-sm-10">
+                    <input type="time" class="form-control">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputColor" class="col-sm-2 col-form-label">Color Picker</label>
+                  <div class="col-sm-10">
+                    <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">Textarea</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" style="height: 100px"></textarea>
+                  </div>
+                </div>
+                <fieldset class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                        First radio
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                      <label class="form-check-label" for="gridRadios2">
+                        Second radio
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios" value="option" disabled>
+                      <label class="form-check-label" for="gridRadios3">
+                        Third disabled radio
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="row mb-3">
+                  <legend class="col-form-label col-sm-2 pt-0">Checkboxes</legend>
+                  <div class="col-sm-10">
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck1">
+                      <label class="form-check-label" for="gridCheck1">
+                        Example checkbox
+                      </label>
+                    </div>
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
+                      <label class="form-check-label" for="gridCheck2">
+                        Example checkbox 2
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Disabled</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" value="Read only / Disabled" disabled>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Select</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Multi Select</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" multiple aria-label="multiple select example">
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div> -->
+
+                <div class="row mb-3">
+                  <!-- <label class="col-sm-2 col-form-label">Submit Button</label> -->
+                  <div class="col-sm-10">
+                    <button type="submit" name="sub" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+
+              </form>
+
+                  </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="basicModal2" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Basic Modal</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                          Are you sure to continue?
+                  </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+                  <!-- <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6><?php echo $deptcount;?></h6>
+                      <h6>12</h6> -->
                       <!-- <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span> -->
 
-                    </div>
-                  </div>
+                    <!-- </div>
+                  </div> -->
 
                 </div>
               </div>
